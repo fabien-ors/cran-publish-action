@@ -49,5 +49,5 @@ runs:
         host: ${{ inputs.host }}
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
-        script: Rscript -e 'for (p in strsplit(${{ env.PKG_LIST }}, ",")[[1]]) { drat::insertPackages(p, repodir="${{ inputs.repo-path }}") }'
+        script: Rscript -e 'for (p in strsplit("${{ env.PKG_LIST }}", ",")[[1]]) { drat::insertPackages(p, repodir="${{ inputs.repo-path }}") }'
 
