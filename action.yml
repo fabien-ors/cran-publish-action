@@ -1,10 +1,10 @@
 name: 'CRAN-like publish'
-description: 'Publish R package to a CRAN-like repository via SSH'
+description: 'Publish artifacts as R packages to a CRAN-like repository via SSH'
 author: 'Fabien Ors'
 
 inputs:
-  package-id:
-    description: 'R Package artefact identifer to be published'
+  artifact-id:
+    description: 'R Package artifact identifer to be published'
   host:
     description: 'CRAN-like server where you can execute SSH commands'
   username:
@@ -18,14 +18,20 @@ runs:
   using: "composite"
   steps:
     - uses: actions/download-artifact@v3
+      # Downloading several artifacts:
+      # https://github.com/actions/download-artifact/issues/103#issuecomment-1290368250
       with:
-        name: ${{ inputs.package-id }}
+	path: downloaded_artifacts
     
-    - name: Retrieve package artefact
+    - name: Retrieve R packages list
+      # For join_by function: https://stackoverflow.com/a/17841619/3952924
       run: |
-        PKG_NAME=$(ls -1)
-        echo "Artefact retrieved: $PKG_NAME"
-        echo "MY_PKG=$PKG_NAME" >> "$GITHUB_ENV"
+        ls -ls download_artifacts/${{inpouts.artifact-id}}
+        flist=$(ls download_artifacts/${{inpouts.artifact-id}}/*)
+        function join_by { local IFS="$1"; shift; echo "$*"; }
+        flist=$(join_by , $flist)
+        echo "Artifacts retrieved: $flist"
+        echo "PKG_LIST=$flist" >> "$GITHUB_ENV"
       shell: bash
       
     - name: Upload to the CRAN-like server
@@ -34,14 +40,15 @@ runs:
         host: ${{ inputs.host }}
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
-        source: ${{ env.MY_PKG }}
+        source: ${{ env.PKG_LIST }}
         target: ~/
+        strip_components: 2 # To upload only the file (not the folders)
 
-    - name: Updating the packages index of the CRAN-like server
+    - name: Update the packages index of the CRAN-like server
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ inputs.host }}
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
-        script: Rscript -e 'drat::insertPackages("${{ env.MY_PKG }}", repodir="${{ inputs.repo-path }}")'
+        script: Rscript -e 'for (p in strsplit(${{ env.PKG_LIST }}, ",")[[1]]) { drat::insertPackages(p, repodir="${{ inputs.repo-path }}") }'
 
