@@ -26,8 +26,8 @@ runs:
     - name: Retrieve R packages list
       # For join_by function: https://stackoverflow.com/a/17841619/3952924
       run: |
-        ls -ls download_artifacts/${{inpouts.artifact-id}}
-        flist=$(ls download_artifacts/${{inpouts.artifact-id}}/*)
+        ls -ls download_artifacts/${{inputs.artifact-id}}
+        flist=$(ls download_artifacts/${{inputs.artifact-id}}/*)
         function join_by { local IFS="$1"; shift; echo "$*"; }
         flist=$(join_by , $flist)
         echo "Artifacts retrieved: $flist"
