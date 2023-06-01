@@ -21,7 +21,7 @@ runs:
       # Downloading several artifacts:
       # https://github.com/actions/download-artifact/issues/103#issuecomment-1290368250
       with:
-	path: downloaded_artifacts
+	path: download_artifacts
     
     - name: Retrieve R packages list
       # For join_by function: https://stackoverflow.com/a/17841619/3952924
