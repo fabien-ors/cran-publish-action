@@ -42,7 +42,6 @@ runs:
         password: ${{ inputs.password }}
         source: ${{ env.PKG_LIST }}
         target: ~/
-        strip_components: 2 # To upload only the file (not the folders)
 
     - name: Update the packages index of the CRAN-like server
       uses: appleboy/ssh-action@v0.1.10
