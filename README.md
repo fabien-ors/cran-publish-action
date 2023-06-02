@@ -18,7 +18,7 @@ https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 * ```repo-path``` - Full path to the CRAN repository in the server
 
 ## Usage
-Build Windows R packages and publish them to a CRAN
+Build R packages under Windows and publish them to a CRAN server
 
 
     name: build and publish R packages (windows)
