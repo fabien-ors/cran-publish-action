@@ -4,13 +4,13 @@ author: 'Fabien Ors'
 
 inputs:
   host:
-    description: 'CRAN-like server where you can execute SSH commands'
+    description: 'CRAN server where you can execute SSH commands'
   username:
     description: 'Username for SSH connection'
   password:
     description: 'Password for SSH connection'
   repo-path:
-    description: 'Path to the CRAN-like repository in the server'
+    description: 'Full path to the CRAN repository in the server'
 
 runs:
   using: "composite"
