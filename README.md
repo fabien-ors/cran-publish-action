@@ -9,7 +9,7 @@ https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 ## Requirements
 - A local or a web server for your CRAN repository
 - The server must accept SSH connections
-- An R version with (drat)[https://cran.r-project.org/web/packages/drat/index.html] package must be installed on the server
+- An R version with [drat](https://cran.r-project.org/web/packages/drat/index.html) package must be installed on the server
 
 ## Input variables
 * ```host``` - CRAN server where you can execute SSH commands
