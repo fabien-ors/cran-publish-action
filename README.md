@@ -16,6 +16,7 @@ https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 * ```username``` - Username for SSH connection
 * ```password:``` - Password for SSH connection
 * ```repo-path``` - Full path to the CRAN repository in the server
+* ```pattern``` - File name pattern filter (default = "*")
 
 ## Usage
 Build R packages under Windows and publish them to a CRAN server

@@ -11,7 +11,11 @@ inputs:
     description: 'Password for SSH connection'
   repo-path:
     description: 'Full path to the CRAN repository in the server'
-
+    default: "~"
+  pattern:
+    description: 'File name pattern filter'
+    default: "*"
+    
 runs:
   using: "composite"
   steps:
@@ -24,8 +28,8 @@ runs:
     - name: Retrieve the list of R packages (all artifacts)
       # For join_by function: https://stackoverflow.com/a/17841619/3952924
       run: |
-        ls -ls download_artifacts/*/*
-        flist=$(ls download_artifacts/*/*)
+        ls -ls download_artifacts/*/${{ inputs.pattern }}
+        flist=$(ls download_artifacts/*/${{ inputs.pattern }})
         function join_by { local IFS="$1"; shift; echo "$*"; }
         flist=$(join_by , $flist)
         echo "Artifacts retrieved: $flist"
