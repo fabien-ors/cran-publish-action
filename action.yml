@@ -19,7 +19,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@v7
       # Downloading several artifacts:
       # https://github.com/actions/download-artifact/issues/103#issuecomment-1290368250
       with:
