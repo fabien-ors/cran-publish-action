@@ -28,6 +28,7 @@ runs:
     - name: Retrieve the list of all R packages
       # For join_by function: https://stackoverflow.com/a/17841619/3952924
       run: |
+        ls -ls download_artifacts
         ls -ls download_artifacts/${{ inputs.pattern }}/*
         flist=$(ls download_artifacts/${{ inputs.pattern }}/*)
         function join_by { local IFS="$1"; shift; echo "$*"; }
